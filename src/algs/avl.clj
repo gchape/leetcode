@@ -98,7 +98,6 @@
                        (remove- (:right tree) k)))
 
     :else
-    ;; node to delete found
     (cond
       ;; no children
       (and (nil? (:left tree)) (nil? (:right tree)))
