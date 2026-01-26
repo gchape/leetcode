@@ -4,16 +4,14 @@ class Solution {
         var stack = new ArrayDeque<Character>();
 
         for (int i = 0; i < s.length(); i++) {
-            if (m.containsKey(s.charAt(i))) {
-                stack.push(s.charAt(i));
+            char c = s.charAt(i);
+
+            if (m.containsKey(c)) {
+                stack.push(c);
+            } else if (stack.isEmpty() || m.get(stack.peek()) != c) {
+                return false;
             } else {
-                if (stack.isEmpty()) {
-                    return false;
-                } else if (m.get(stack.peek()) == s.charAt(i)) {
-                    stack.pop();
-                } else {
-                    return false;
-                }
+                stack.pop();
             }
         }
 
