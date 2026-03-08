@@ -1,28 +1,19 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        int el = -1;
-        int cnt = 1;
+        int count = 0;
+        int majority = 0;
 
-        for (int i = 0; i < nums.length; i++) {
-            if (cnt == 0) {
-                el = nums[i];
-                cnt++;
-            }
-            
-            if (el == nums[i]) {
-                cnt++;
-            }
-
-            if (el != nums[i]) {
-                cnt--;
-            }
-
-            if (cnt == 0) {
-                cnt++;
-                el = nums[i];
+        for (var n : nums) {
+            if (count == 0) {
+                count++;
+                majority = n;
+            } else if (majority == n) {
+                count++;
+            } else {
+                count--;
             }
         }
 
-        return el;
+        return majority;
     }
 }
