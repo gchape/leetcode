@@ -5,9 +5,7 @@ class Solution {
             if (temp.toString().equals(goal)) {
                 return true;
             }
-
-            var top = temp.charAt(0);
-            temp.deleteCharAt(0).append(top);
+            temp.append(temp.charAt(0)).deleteCharAt(0);
         }
 
         return false;
