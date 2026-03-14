@@ -6,11 +6,14 @@ class Solution {
             map.merge(c, 1, Integer::sum);
         }
 
-        return map.entrySet()
-                .stream()
-                .sorted(Map.Entry.<Character, Integer>comparingByValue(Comparator.reverseOrder())
-                        .thenComparing(Map.Entry.comparingByKey()))
-                .map(e -> String.valueOf(e.getKey()).repeat(e.getValue()))
-                .collect(Collectors.joining());
+        var list = new ArrayList<>(map.entrySet());
+        list.sort(Map.Entry.<Character, Integer>comparingByValue().reversed());
+
+        var result = new StringBuilder();
+        for (var entry : list) {
+            result.append(String.valueOf(entry.getKey()).repeat(entry.getValue()));
+        }
+
+        return result.toString();
     }
 }
