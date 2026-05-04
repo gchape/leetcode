@@ -1,0 +1,25 @@
+// Last updated: 5/4/2026, 7:18:30 PM
+class Solution {
+    public String removeOuterParentheses(String s) {
+        var result = new StringBuilder();
+        var stack = new ArrayDeque<Character>();
+
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                if (!stack.isEmpty()) {
+                    result.append(c);
+                }
+
+                stack.push(c);
+            } else {
+                stack.pop();
+
+                if (!stack.isEmpty()) {
+                    result.append(c);
+                }
+            }
+        }
+
+        return result.toString();
+    }
+}
