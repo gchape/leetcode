@@ -1,25 +1,20 @@
-// Last updated: 5/4/2026, 7:18:33 PM
-class Solution {
-    public int subarraySum(int[] nums, int k) {
-        int sum = 0, count = 0;
-        var prefix = new HashMap<Integer, Integer>() {
-            {
-                put(0, 1);
-            }
-        };
-
-        for (var n : nums) {
-            sum += n;
-
-            if (prefix.containsKey(sum - k)) {
-                count += prefix.get(sum - k);
-            }
-
-            prefix.compute(
-                    sum,
-                    (_, v) -> v == null ? 1 : v + 1);
-        }
-
-        return count;
-    }
-}
+// Last updated: 8/3/2026, 4:48:19 PM
+1class Solution {
+2    public int subarraySum(int[] nums, int k) {
+3        Arrays.parallelPrefix(nums, Integer::sum);
+4
+5        int count = 0;
+6        for (int i = 0; i < nums.length; i++) {
+7            if (nums[i] == k) {
+8                count++;
+9            }
+10            for (int j = 0; j < i; j++) {
+11                if (nums[i] - nums[j] == k) {
+12                    count++;
+13                }
+14            }
+15        }
+16
+17        return count;
+18    }
+19}
