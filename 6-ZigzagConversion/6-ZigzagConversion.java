@@ -1,4 +1,4 @@
-// Last updated: 8/4/2026, 8:09:15 PM
+// Last updated: 8/4/2026, 8:09:41 PM
 1class Solution {
 2    public String convert(String s, int numRows) {
 3        if (numRows == 1 || s.length() <= numRows) {
@@ -11,27 +11,26 @@
 10        }
 11
 12        int idx = 0;
-13        int from = 0;
-14
-15        while (idx < s.length()) {
-16
-17            // Down
-18            for (int i = from; i < numRows && idx < s.length(); i++) {
-19                rows[i].append(s.charAt(idx++));
-20            }
-21
-22            // Up (skip first and last rows)
-23            for (int i = numRows - 2; i > 0 && idx < s.length(); i--) {
-24                rows[i].append(s.charAt(idx++));
-25            }
-26
-27        }
-28
-29        StringBuilder result = new StringBuilder();
-30        for (StringBuilder row : rows) {
-31            result.append(row);
-32        }
-33
-34        return result.toString();
-35    }
-36}
+13
+14        while (idx < s.length()) {
+15
+16            // Down
+17            for (int i = 0; i < numRows && idx < s.length(); i++) {
+18                rows[i].append(s.charAt(idx++));
+19            }
+20
+21            // Up (skip first and last rows)
+22            for (int i = numRows - 2; i > 0 && idx < s.length(); i--) {
+23                rows[i].append(s.charAt(idx++));
+24            }
+25
+26        }
+27
+28        StringBuilder result = new StringBuilder();
+29        for (StringBuilder row : rows) {
+30            result.append(row);
+31        }
+32
+33        return result.toString();
+34    }
+35}
