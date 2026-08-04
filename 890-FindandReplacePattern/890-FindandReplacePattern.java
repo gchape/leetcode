@@ -1,4 +1,4 @@
-// Last updated: 8/4/2026, 6:50:49 PM
+// Last updated: 8/4/2026, 7:01:05 PM
 1class Solution {
 2    public List<String> findAndReplacePattern(String[] words, String pattern) {
 3        List<String> result = new ArrayList<>();
@@ -18,21 +18,23 @@
 17        }
 18
 19        Map<Character, Character> mappings = new HashMap<>();
-20
-21        for (int i = 0; i < pattern.length(); i++) {
-22            char p = pattern.charAt(i);
-23            char w = word.charAt(i);
-24
-25            if (!mappings.containsKey(p)) {
-26                if (mappings.containsValue(w)) {
-27                    return false;
-28                }
-29                mappings.put(p, w);
-30            } else if (mappings.get(p) != w) {
-31                return false;
-32            }
-33        }
-34
-35        return true;
-36    }
-37}
+20        Set<Character> values = new HashSet<>();
+21
+22        for (int i = 0; i < pattern.length(); i++) {
+23            char p = pattern.charAt(i);
+24            char w = word.charAt(i);
+25
+26            if (!mappings.containsKey(p)) {
+27                if (values.contains(w)) {
+28                    return false;
+29                }
+30                mappings.put(p, w);
+31                values.add(w);
+32            } else if (mappings.get(p) != w) {
+33                return false;
+34            }
+35        }
+36
+37        return true;
+38    }
+39}
