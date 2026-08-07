@@ -1,0 +1,28 @@
+// Last updated: 8/7/2026, 11:13:09 AM
+class Solution {
+    public int countPrimes(int n) {
+        if (n <= 2)
+            return 0;
+
+        boolean[] isNotPrime = new boolean[n];
+        isNotPrime[0] = true;
+        isNotPrime[1] = true;
+
+        for (int i = 2; i * i < n; i++) {
+            if (!isNotPrime[i]) {
+                for (int j = i * i; j < n; j += i) {
+                    isNotPrime[j] = true;
+                }
+            }
+        }
+
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            if (!isNotPrime[i]) {
+                result++;
+            }
+        }
+
+        return result;
+    }
+}
