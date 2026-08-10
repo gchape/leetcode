@@ -1,4 +1,4 @@
-// Last updated: 8/10/2026, 11:32:40 PM
+// Last updated: 8/10/2026, 11:37:07 PM
 1/**
 2 * Definition for singly-linked list.
 3 * public class ListNode {
@@ -18,19 +18,16 @@
 17    }
 18
 19    private boolean check(ListNode right) {
-20        if (right == null) {
+20        if (right == null)
 21            return true;
-22        }
-23
-24        if (!check(right.next)) {
-25            return false;
-26        }
-27
-28        if (left.val != right.val) {
-29            return false;
-30        }
-31
-32        left = left.next;
-33        return true;
-34    }
-35}
+22
+23        if (!check(right.next))
+24            return false;
+25
+26        if (left.val != right.val)
+27            return false;
+28
+29        left = left.next;
+30        return true;
+31    }
+32}
