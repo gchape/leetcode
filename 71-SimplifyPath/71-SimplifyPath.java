@@ -1,4 +1,4 @@
-// Last updated: 8/11/2026, 7:33:25 PM
+// Last updated: 8/11/2026, 7:33:33 PM
 1class Solution {
 2    public String simplifyPath(String path) {
 3        var stack = new ArrayDeque<String>();
