@@ -1,4 +1,4 @@
-// Last updated: 8/12/2026, 5:48:23 PM
+// Last updated: 8/12/2026, 5:52:37 PM
 1class Solution {
 2    private ListNode head;
 3    private boolean stop;
@@ -36,7 +36,7 @@
 35
 36        head.next = tail;
 37        tail.next = next;
-38
+38        
 39        head = next;
 40    }
 41}
