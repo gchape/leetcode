@@ -1,4 +1,4 @@
-// Last updated: 8/12/2026, 11:42:12 PM
+// Last updated: 8/12/2026, 11:46:22 PM
 1/**
 2 * Definition for singly-linked list.
 3 * public class ListNode {
@@ -12,13 +12,13 @@
 11class Solution {
 12
 13    public ListNode swapPairs(ListNode head) {
-14        if (head == null || head.next == null)
-15            return head;
-16
-17        var prev = head;
-18        head = prev.next;
-19        ListNode curr, connector = null;
-20
+14        if (head == null || head.next == null) return head;
+15
+16        var prev = head;
+17        head = prev.next;
+18
+19        ListNode curr;
+20        ListNode tail = null;
 21        while (prev != null && prev.next != null) {
 22            curr = prev.next;
 23            var next = curr.next;
@@ -26,16 +26,16 @@
 25            curr.next = prev;
 26            prev.next = null;
 27
-28            if (connector != null) {
-29                connector.next = curr;
+28            if (tail != null) {
+29                tail.next = curr;
 30            }
 31
-32            connector = prev;
+32            tail = prev;
 33            prev = next;
 34        }
 35
 36        if (prev != null) {
-37            connector.next = prev;
+37            tail.next = prev;
 38        }
 39
 40        return head;
