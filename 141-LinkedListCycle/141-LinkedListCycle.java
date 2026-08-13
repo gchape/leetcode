@@ -1,4 +1,4 @@
-// Last updated: 8/13/2026, 3:30:34 PM
+// Last updated: 8/13/2026, 3:31:04 PM
 1/**
 2 * Definition for singly-linked list.
 3 * class ListNode {
@@ -15,16 +15,14 @@
 14        if (head == null) return false;
 15
 16        var nodes = new IdentityHashMap<ListNode, Boolean>();
-17
-18        while (head.next != null) {
-19            if (nodes.containsKey(head)) {
-20                return true;
-21            } else {
-22                nodes.put(head, true);
-23            }
-24            head = head.next;
-25        }
-26
-27        return false;
-28    }
-29}
+17        while (head.next != null) {
+18            if (nodes.containsKey(head)) {
+19                return true;
+20            } else {
+21                nodes.put(head, true);
+22            }
+23            head = head.next;
+24        }
+25        return false;
+26    }
+27}
