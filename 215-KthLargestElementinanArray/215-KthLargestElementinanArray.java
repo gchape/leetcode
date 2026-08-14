@@ -1,4 +1,4 @@
-// Last updated: 8/14/2026, 5:37:06 PM
+// Last updated: 8/14/2026, 5:37:13 PM
 1class Solution {
 2    public int findKthLargest(int[] nums, int k) {
 3        if (nums == null || nums.length == 0 || k > nums.length) {
