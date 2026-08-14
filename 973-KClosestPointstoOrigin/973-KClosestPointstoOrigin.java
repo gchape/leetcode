@@ -1,4 +1,4 @@
-// Last updated: 8/14/2026, 8:25:27 PM
+// Last updated: 8/14/2026, 8:25:34 PM
 1class Solution {
 2    public int[][] kClosest(int[][] points, int k) {
 3        if (points.length < k) {
