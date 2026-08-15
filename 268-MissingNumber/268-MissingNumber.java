@@ -1,16 +1,12 @@
-// Last updated: 5/4/2026, 7:18:38 PM
-class Solution {
-    public int missingNumber(int[] nums) {
-        int xor1 = 0, xor2 = 0;
-        
-        for (var n : nums) {
-            xor1 ^= n;
-        }
-
-        for (int i = 0; i <= nums.length; i++) {
-            xor2 ^= i;
-        }
-
-        return xor1 ^ xor2;
-    }
-}
+// Last updated: 8/15/2026, 9:18:02 PM
+1class Solution {
+2    public int missingNumber(int[] nums) {
+3        var bitSet = new java.util.BitSet(nums.length);
+4
+5        for (var num : nums) {
+6            bitSet.set(num);
+7        }
+8
+9        return bitSet.nextClearBit(0);
+10    }
+11}
