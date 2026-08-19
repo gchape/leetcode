@@ -1,4 +1,4 @@
-// Last updated: 8/19/2026, 11:43:34 AM
+// Last updated: 8/19/2026, 11:48:39 AM
 1class Solution {
 2
 3    public List<String> restoreIpAddresses(String s) {
@@ -29,7 +29,7 @@
 28                break;
 29
 30            if (Integer.parseInt(part) > 255)
-31                break;
+31                continue;
 32
 33            ipAddress.add(part);
 34
