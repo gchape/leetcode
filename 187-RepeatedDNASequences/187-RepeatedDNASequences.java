@@ -1,4 +1,4 @@
-// Last updated: 8/19/2026, 2:00:43 PM
+// Last updated: 8/19/2026, 2:01:48 PM
 1import java.util.*;
 2
 3class Solution {
@@ -7,62 +7,52 @@
 6        List<String> result = new ArrayList<>();
 7
 8        int n = s.length();
-9        int m = 10; // we're always looking at windows of exactly 10 characters
+9        int m = 10;
 10
 11        if (n < m) return result;
 12
-13        int base = 256;
-14        long mod = 1_000_000_007L;
-15
-16        // Place value of the leading character: base^(m-1)
-17        long highOrder = 1;
-18        for (int i = 0; i < m - 1; i++) {
-19            highOrder = (highOrder * base) % mod;
-20        }
-21
-22        // Hash of the very first 10-character window
-23        long windowHash = 0;
-24        for (int i = 0; i < m; i++) {
-25            windowHash = (windowHash * base + s.charAt(i)) % mod;
-26        }
-27
-28        // Maps a hash -> the actual substrings we've seen with that hash.
-29        // (A list, not just a count, so we can verify and catch collisions.)
-30        Map<Long, List<String>> seen = new HashMap<>();
-31
-32        // Track which sequences we've already added to the result,
-33        // so a sequence appearing 3+ times doesn't get added more than once.
-34        Set<String> added = new HashSet<>();
+13        // Map each of the 4 possible DNA letters to a 2-bit code.
+14        // A=00, C=01, G=10, T=11
+15        int[] code = new int[26];
+16        code['A' - 'A'] = 0;
+17        code['C' - 'A'] = 1;
+18        code['G' - 'A'] = 2;
+19        code['T' - 'A'] = 3;
+20
+21        // A 10-character window becomes a 20-bit integer (2 bits per char).
+22        // This is a PERFECT hash: every distinct 10-letter DNA sequence maps
+23        // to a unique integer, so there are zero collisions - no verification needed.
+24        int mask = (1 << 20) - 1; // keeps only the lowest 20 bits
+25
+26        int windowCode = 0;
+27        for (int i = 0; i < m; i++) {
+28            windowCode = (windowCode << 2) | code[s.charAt(i) - 'A'];
+29        }
+30
+31        // seenOnce / seenTwice track state per possible 20-bit code (there are
+32        // only 2^20 = ~1 million possible codes, so a plain array is fast and cheap).
+33        boolean[] seenOnce = new boolean[1 << 20];
+34        boolean[] seenTwice = new boolean[1 << 20];
 35
-36        String firstWindow = s.substring(0, m);
-37        seen.computeIfAbsent(windowHash, k -> new ArrayList<>()).add(firstWindow);
-38
-39        int last = n - m;
-40
-41        for (int i = 0; i < last; i++) {
-42            // Slide the window forward by one character
-43            int leavingChar = s.charAt(i);
-44            int enteringChar = s.charAt(i + m);
-45
-46            windowHash = ((windowHash - leavingChar * highOrder) * base + enteringChar) % mod;
-47            if (windowHash < 0) {
-48                windowHash += mod;
-49            }
-50
-51            String currentWindow = s.substring(i + 1, i + 1 + m);
-52            List<String> bucket = seen.computeIfAbsent(windowHash, k -> new ArrayList<>());
-53
-54            // Real substring check: is currentWindow genuinely already in this bucket?
-55            // (Not just "does the hash match" - the hash could collide with a different string.)
-56            if (bucket.contains(currentWindow)) {
-57                if (added.add(currentWindow)) {
-58                    result.add(currentWindow);
-59                }
-60            } else {
-61                bucket.add(currentWindow);
-62            }
-63        }
-64
-65        return result;
-66    }
-67}
+36        seenOnce[windowCode] = true;
+37
+38        int last = n - m;
+39
+40        for (int i = 0; i < last; i++) {
+41            int enteringChar = code[s.charAt(i + m) - 'A'];
+42
+43            // Shift left 2 bits (drop the oldest char automatically via mask),
+44            // then add the new character's 2-bit code at the end.
+45            windowCode = ((windowCode << 2) | enteringChar) & mask;
+46
+47            if (seenOnce[windowCode] && !seenTwice[windowCode]) {
+48                seenTwice[windowCode] = true;
+49                result.add(s.substring(i + 1, i + 1 + m));
+50            } else {
+51                seenOnce[windowCode] = true;
+52            }
+53        }
+54
+55        return result;
+56    }
+57}
