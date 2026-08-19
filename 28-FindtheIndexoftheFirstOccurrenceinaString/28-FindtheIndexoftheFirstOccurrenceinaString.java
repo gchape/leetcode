@@ -1,53 +1,55 @@
-// Last updated: 8/19/2026, 1:47:41 PM
+// Last updated: 8/19/2026, 1:47:51 PM
 1class Solution {
 2
 3    public int strStr(String haystack, String needle) {
 4        int n = haystack.length();
 5        int m = needle.length();
 6
-7        if (m == 0) return 0;
-8        if (m > n) return -1;
-9
-10        int base = 256;
-11        long mod = 1_000_000_007L;
-12
-13        // Place value of the leading character, e.g. for length m -> base^(m-1)
-14        long highOrder = 1;
-15        for (int i = 0; i < m - 1; i++) {
-16            highOrder = (highOrder * base) % mod;
-17        }
-18
-19        // Hash of the needle
-20        long needleHash = 0;
-21        for (int i = 0; i < m; i++) {
-22            needleHash = (needleHash * base + needle.charAt(i)) % mod;
-23        }
-24
-25        // Hash of the first window in haystack
-26        long windowHash = 0;
-27        for (int i = 0; i < m; i++) {
-28            windowHash = (windowHash * base + haystack.charAt(i)) % mod;
-29        }
-30
-31        int last = n - m;
+7        if (m == 0)
+8            return 0;
+9        if (m > n)
+10            return -1;
+11
+12        int base = 256;
+13        long mod = 1_000_000_007L;
+14
+15        // Place value of the leading character, e.g. for length m -> base^(m-1)
+16        long highOrder = 1;
+17        for (int i = 0; i < m - 1; i++) {
+18            highOrder = (highOrder * base) % mod;
+19        }
+20
+21        // Hash of the needle
+22        long needleHash = 0;
+23        for (int i = 0; i < m; i++) {
+24            needleHash = (needleHash * base + needle.charAt(i)) % mod;
+25        }
+26
+27        // Hash of the first window in haystack
+28        long windowHash = 0;
+29        for (int i = 0; i < m; i++) {
+30            windowHash = (windowHash * base + haystack.charAt(i)) % mod;
+31        }
 32
-33        for (int i = 0; i <= last; i++) {
-34            // Hashes match -> confirm with a real comparison (rules out collisions)
-35            if (windowHash == needleHash && haystack.regionMatches(i, needle, 0, m)) {
-36                return i;
-37            }
-38
-39            if (i < last) {
-40                int leavingChar = haystack.charAt(i);
-41                int enteringChar = haystack.charAt(i + m);
-42
-43                windowHash = ((windowHash - leavingChar * highOrder) * base + enteringChar) % mod;
-44                if (windowHash < 0) {
-45                    windowHash += mod;
-46                }
-47            }
-48        }
-49
-50        return -1;
-51    }
-52}
+33        int last = n - m;
+34
+35        for (int i = 0; i <= last; i++) {
+36            // Hashes match -> confirm with a real comparison (rules out collisions)
+37            if (windowHash == needleHash && haystack.regionMatches(i, needle, 0, m)) {
+38                return i;
+39            }
+40
+41            if (i < last) {
+42                int leavingChar = haystack.charAt(i);
+43                int enteringChar = haystack.charAt(i + m);
+44
+45                windowHash = ((windowHash - leavingChar * highOrder) * base + enteringChar) % mod;
+46                if (windowHash < 0) {
+47                    windowHash += mod;
+48                }
+49            }
+50        }
+51
+52        return -1;
+53    }
+54}
