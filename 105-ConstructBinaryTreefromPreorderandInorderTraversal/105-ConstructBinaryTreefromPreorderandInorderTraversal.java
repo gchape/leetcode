@@ -1,4 +1,4 @@
-// Last updated: 8/22/2026, 11:29:45 PM
+// Last updated: 8/22/2026, 11:30:45 PM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -17,38 +17,47 @@
 16class Solution {
 17
 18    public TreeNode buildTree(int[] preorder, int[] inorder) {
-19        return build(preorder, inorder);
+19        return build(preorder, inorder, 0, 0, inorder.length);
 20    }
 21
-22    private TreeNode build(int[] preorder, int[] inorder) {
-23        if (preorder.length == 0) {
-24            return null;
-25        }
-26
-27        int rootValue = preorder[0];
-28        TreeNode root = new TreeNode(rootValue);
-29
-30        int rootIndex = 0;
-31        while (inorder[rootIndex] != rootValue) {
-32            rootIndex++;
-33        }
+22    private TreeNode build(
+23            int[] preorder,
+24            int[] inorder,
+25            int preorderStart,
+26            int inorderStart,
+27            int inorderEnd) {
+28
+29        if (inorderStart >= inorderEnd) {
+30            return null;
+31        }
+32
+33        int rootValue = preorder[preorderStart];
 34
-35        // Number of nodes in left subtree
-36        int leftSize = rootIndex;
-37
-38        int[] leftPreorder = Arrays.copyOfRange(preorder, 1, 1 + leftSize);
-39        int[] leftInorder = Arrays.copyOfRange(inorder, 0, leftSize);
-40
-41        int[] rightPreorder = Arrays.copyOfRange(
-42            preorder, 1 + leftSize, preorder.length
-43        );
-44        int[] rightInorder = Arrays.copyOfRange(
-45            inorder, leftSize + 1, inorder.length
-46        );
-47
-48        root.left = build(leftPreorder, leftInorder);
-49        root.right = build(rightPreorder, rightInorder);
-50
-51        return root;
-52    }
-53}
+35        int rootIndex = inorderStart;
+36        while (inorder[rootIndex] != rootValue) {
+37            rootIndex++;
+38        }
+39
+40        int leftSize = rootIndex - inorderStart;
+41
+42        TreeNode root = new TreeNode(rootValue);
+43
+44        root.left = build(
+45                preorder,
+46                inorder,
+47                preorderStart + 1,
+48                inorderStart,
+49                rootIndex
+50        );
+51
+52        root.right = build(
+53                preorder,
+54                inorder,
+55                preorderStart + 1 + leftSize,
+56                rootIndex + 1,
+57                inorderEnd
+58        );
+59
+60        return root;
+61    }
+62}
