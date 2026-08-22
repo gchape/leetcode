@@ -1,4 +1,4 @@
-// Last updated: 8/22/2026, 11:30:45 PM
+// Last updated: 8/22/2026, 11:37:44 PM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -17,47 +17,31 @@
 16class Solution {
 17
 18    public TreeNode buildTree(int[] preorder, int[] inorder) {
-19        return build(preorder, inorder, 0, 0, inorder.length);
-20    }
-21
-22    private TreeNode build(
-23            int[] preorder,
-24            int[] inorder,
-25            int preorderStart,
-26            int inorderStart,
-27            int inorderEnd) {
+19        TreeNode root = new TreeNode(preorder[0]);
+20
+21        Deque<TreeNode> stack = new ArrayDeque<>();
+22        stack.push(root);
+23
+24        int inorderIndex = 0;
+25
+26        for (int i = 1; i < preorder.length; i++) {
+27            TreeNode node = stack.peek();
 28
-29        if (inorderStart >= inorderEnd) {
-30            return null;
-31        }
-32
-33        int rootValue = preorder[preorderStart];
-34
-35        int rootIndex = inorderStart;
-36        while (inorder[rootIndex] != rootValue) {
-37            rootIndex++;
-38        }
-39
-40        int leftSize = rootIndex - inorderStart;
-41
-42        TreeNode root = new TreeNode(rootValue);
+29            if (node.val != inorder[inorderIndex]) {
+30                node.left = new TreeNode(preorder[i]);
+31                stack.push(node.left);
+32            } else {
+33                while (!stack.isEmpty()
+34                        && stack.peek().val == inorder[inorderIndex]) {
+35                    node = stack.pop();
+36                    inorderIndex++;
+37                }
+38
+39                node.right = new TreeNode(preorder[i]);
+40                stack.push(node.right);
+41            }
+42        }
 43
-44        root.left = build(
-45                preorder,
-46                inorder,
-47                preorderStart + 1,
-48                inorderStart,
-49                rootIndex
-50        );
-51
-52        root.right = build(
-53                preorder,
-54                inorder,
-55                preorderStart + 1 + leftSize,
-56                rootIndex + 1,
-57                inorderEnd
-58        );
-59
-60        return root;
-61    }
-62}
+44        return root;
+45    }
+46}
