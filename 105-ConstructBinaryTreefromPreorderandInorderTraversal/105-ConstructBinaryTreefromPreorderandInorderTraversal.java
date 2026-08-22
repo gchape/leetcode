@@ -1,4 +1,4 @@
-// Last updated: 8/22/2026, 10:50:33 PM
+// Last updated: 8/22/2026, 11:29:45 PM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -17,31 +17,38 @@
 16class Solution {
 17
 18    public TreeNode buildTree(int[] preorder, int[] inorder) {
-19        TreeNode root = new TreeNode(preorder[0]);
-20
-21        Deque<TreeNode> stack = new ArrayDeque<>();
-22        stack.push(root);
-23
-24        int inorderIndex = 0;
-25
-26        for (int i = 1; i < preorder.length; i++) {
-27            TreeNode node = stack.peek();
-28
-29            if (node.val != inorder[inorderIndex]) {
-30                node.left = new TreeNode(preorder[i]);
-31                stack.push(node.left);
-32            } else {
-33                while (!stack.isEmpty() &&
-34                       stack.peek().val == inorder[inorderIndex]) {
-35                    node = stack.pop();
-36                    inorderIndex++;
-37                }
-38
-39                node.right = new TreeNode(preorder[i]);
-40                stack.push(node.right);
-41            }
-42        }
-43
-44        return root;
-45    }
-46}
+19        return build(preorder, inorder);
+20    }
+21
+22    private TreeNode build(int[] preorder, int[] inorder) {
+23        if (preorder.length == 0) {
+24            return null;
+25        }
+26
+27        int rootValue = preorder[0];
+28        TreeNode root = new TreeNode(rootValue);
+29
+30        int rootIndex = 0;
+31        while (inorder[rootIndex] != rootValue) {
+32            rootIndex++;
+33        }
+34
+35        // Number of nodes in left subtree
+36        int leftSize = rootIndex;
+37
+38        int[] leftPreorder = Arrays.copyOfRange(preorder, 1, 1 + leftSize);
+39        int[] leftInorder = Arrays.copyOfRange(inorder, 0, leftSize);
+40
+41        int[] rightPreorder = Arrays.copyOfRange(
+42            preorder, 1 + leftSize, preorder.length
+43        );
+44        int[] rightInorder = Arrays.copyOfRange(
+45            inorder, leftSize + 1, inorder.length
+46        );
+47
+48        root.left = build(leftPreorder, leftInorder);
+49        root.right = build(rightPreorder, rightInorder);
+50
+51        return root;
+52    }
+53}
