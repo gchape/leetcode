@@ -1,4 +1,4 @@
-// Last updated: 8/22/2026, 11:57:46 PM
+// Last updated: 8/23/2026, 12:00:55 AM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -33,9 +33,10 @@
 32
 33        if (root.left == null && root.right == null) {
 34            list.add(root.val);
-35        }
-36
-37        appendLeaves(root.left, list);
-38        appendLeaves(root.right, list);
-39    }
-40}
+35            return;
+36        }
+37
+38        appendLeaves(root.left, list);
+39        appendLeaves(root.right, list);
+40    }
+41}
