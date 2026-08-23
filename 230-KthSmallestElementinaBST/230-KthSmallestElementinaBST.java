@@ -1,4 +1,4 @@
-// Last updated: 8/23/2026, 9:59:15 AM
+// Last updated: 8/23/2026, 10:01:08 AM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -32,8 +32,9 @@
 31
 32        if (kth == k) {
 33            kthSmallest = root.val;
-34        }
-35
-36        kthSmallestHelper(root.right, k);
-37    }
-38}
+34            return;
+35        }
+36
+37        kthSmallestHelper(root.right, k);
+38    }
+39}
