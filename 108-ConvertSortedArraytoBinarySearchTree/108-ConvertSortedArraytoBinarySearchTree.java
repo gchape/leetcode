@@ -1,4 +1,4 @@
-// Last updated: 8/23/2026, 12:25:36 PM
+// Last updated: 8/23/2026, 12:26:08 PM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -24,17 +24,14 @@
 23        if (left > right) {
 24            return null;
 25        }
-26        if (left == right) {
-27            return new TreeNode(nums[left]);
-28        }
-29
-30        int mid = left + (right - left) / 2;
-31
-32        TreeNode root = new TreeNode(nums[mid]);
+26
+27        int mid = left + (right - left) / 2;
+28
+29        TreeNode root = new TreeNode(nums[mid]);
+30
+31        root.left = sortedArrayToBST(nums, left, mid - 1);
+32        root.right = sortedArrayToBST(nums, mid + 1, right);
 33
-34        root.left = sortedArrayToBST(nums, left, mid - 1);
-35        root.right = sortedArrayToBST(nums, mid + 1, right);
-36
-37        return root;
-38    }
-39}
+34        return root;
+35    }
+36}
