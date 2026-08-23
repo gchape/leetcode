@@ -1,4 +1,4 @@
-// Last updated: 8/23/2026, 10:01:08 AM
+// Last updated: 8/23/2026, 10:04:56 AM
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,26 +15,24 @@
 14 * }
 15 */
 16class Solution {
-17    private int kth = 0;
-18    private int kthSmallest = -1;
-19
-20    public int kthSmallest(TreeNode root, int k) {
-21        kthSmallestHelper(root, k);
+17
+18    public int kthSmallest(TreeNode root, int k) {
+19        Deque<TreeNode> stack = new ArrayDeque<>();
+20
+21        while (true) {
 22
-23        return kthSmallest;
-24    }
-25
-26    private void kthSmallestHelper(TreeNode root, int k) {
-27        if (root == null) return;
-28
-29        kthSmallestHelper(root.left, k);
-30        kth++;
-31
-32        if (kth == k) {
-33            kthSmallest = root.val;
-34            return;
+23            while (root != null) {
+24                stack.push(root);
+25                root = root.left;
+26            }
+27
+28            root = stack.pop();
+29
+30            if (--k == 0) {
+31                return root.val;
+32            }
+33
+34            root = root.right;
 35        }
-36
-37        kthSmallestHelper(root.right, k);
-38    }
-39}
+36    }
+37}
