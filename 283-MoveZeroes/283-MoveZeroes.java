@@ -1,24 +1,13 @@
-// Last updated: 5/4/2026, 7:18:37 PM
-class Solution {
-    public void moveZeroes(int[] nums) {
-        int z = -1;
-
-        // Find first zero
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0) {
-                z = i;
-                break;
-            }
-        }
-
-        if (z == -1) return;
-
-        for (int i = z + 1; i < nums.length; i++) {
-            if (nums[i] != 0) {
-                nums[z] = nums[i];
-                nums[i] = 0;
-                z++;
-            }
-        }
-    }
-}
+// Last updated: 9/5/2026, 7:49:43 PM
+1class Solution {
+2
+3    public void moveZeroes(int[] nums) {
+4        int insertPos = 0;
+5        for (int num : nums) {
+6            if (num != 0)
+7                nums[insertPos++] = num;
+8        }
+9        while (insertPos < nums.length)
+10            nums[insertPos++] = 0;
+11    }
+12}
