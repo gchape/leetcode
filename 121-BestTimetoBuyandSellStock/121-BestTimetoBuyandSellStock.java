@@ -1,4 +1,4 @@
-// Last updated: 9/5/2026, 9:49:42 PM
+// Last updated: 9/5/2026, 9:50:57 PM
 1class Solution {
 2
 3    public int maxProfit(int[] prices) {
@@ -8,8 +8,8 @@
 7        for (int price : prices) {
 8            if (price < minPrice) {
 9                minPrice = price; // found a cheaper day to buy
-10            } else if (price - minPrice > maxProfit) {
-11                maxProfit = price - minPrice; // selling today beats our best so far
+10            } else {
+11                maxProfit = Math.max(maxProfit, price - minPrice);
 12            }
 13        }
 14
