@@ -1,22 +1,13 @@
-// Last updated: 5/4/2026, 7:18:39 PM
-class Solution {
-    public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length())
-            return false;
-
-        var array = new int[26];
-        for (int i = 0; i < s.length(); i++) {
-            array[s.charAt(i) - 97]++;
-        }
-        for (int i = 0; i < t.length(); i++) {
-            array[t.charAt(i) - 97]--;
-        }
-
-        for (var n : array) {
-            if (n != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
+// Last updated: 9/5/2026, 9:10:06 PM
+1class Solution {
+2
+3    public boolean isAnagram(String s, String t) {
+4        var chars1 = s.toCharArray();
+5        Arrays.sort(chars1);
+6
+7        var chars2 = t.toCharArray();
+8        Arrays.sort(chars2);
+9
+10        return new String(chars1).equals(new String(chars2));
+11    }
+12}
