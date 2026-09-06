@@ -1,47 +1,26 @@
-// Last updated: 8/2/2026, 11:14:01 AM
+// Last updated: 9/6/2026, 10:28:09 AM
 1class Solution {
-2    public List<List<Integer>> threeSum(int[] nums) {
-3        List<List<Integer>> result = new ArrayList<>();
-4
-5        Arrays.sort(nums);
-6
-7        for (int i = 0; i < nums.length - 2; i++) {
-8
-9            // Skip duplicate first elements
-10            if (i > 0 && nums[i] == nums[i - 1]) {
-11                continue;
-12            }
-13
-14            int left = i + 1;
-15            int right = nums.length - 1;
-16
-17            while (left < right) {
-18                int sum = nums[i] + nums[left] + nums[right];
-19
-20                if (sum == 0) {
-21                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+2
+3    public List<List<Integer>> threeSum(int[] nums) {
+4        Set<List<Integer>> uniqueTriplets = new HashSet<>();
+5
+6        for (int i = 0; i < nums.length; i++) {
+7            int target = -nums[i];
+8            Set<Integer> seen = new HashSet<>();
+9
+10            for (int j = i + 1; j < nums.length; j++) {
+11                int complement = target - nums[j];
+12
+13                if (seen.contains(complement)) {
+14                    List<Integer> triplet = new ArrayList<>(List.of(nums[i], complement, nums[j]));
+15                    Collections.sort(triplet);
+16                    uniqueTriplets.add(triplet);
+17                }
+18
+19                seen.add(nums[j]);
+20            }
+21        }
 22
-23                    // Skip duplicate left values
-24                    while (left < right && nums[left] == nums[left + 1]) {
-25                        left++;
-26                    }
-27
-28                    // Skip duplicate right values
-29                    while (left < right && nums[right] == nums[right - 1]) {
-30                        right--;
-31                    }
-32
-33                    left++;
-34                    right--;
-35
-36                } else if (sum < 0) {
-37                    left++; // Need a larger sum
-38                } else {
-39                    right--; // Need a smaller sum
-40                }
-41            }
-42        }
-43
-44        return result;
-45    }
-46}
+23        return new ArrayList<>(uniqueTriplets);
+24    }
+25}
